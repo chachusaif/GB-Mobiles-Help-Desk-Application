@@ -1,130 +1,59 @@
-# Repair Tracker
+# Helpdesk
 
-A job tracking system for an independent phone and computer repair shop.
-Staff book in repairs, move them along a fixed pipeline and record notes;
-customers check the status of their own repair with a ticket reference, without
-logging in or phoning the shop.
+A full-stack helpdesk web application, built from scratch for a client. Customers raise support tickets, and admins receive them and respond, all through an email-style inbox interface.
 
-Built with Node.js, Express and PostgreSQL. No front-end framework.
+> **Status:** early development. See the [roadmap](#roadmap) for what is done and what is in progress.
 
----
+## Overview
 
-## What it does
+The application has two types of user account:
 
-**Staff (login required)**
-- Book in a repair: customer, contact number, device, fault, quoted price
-- Every job gets a customer-facing reference (`TSH-0001`)
-- Move a job through the pipeline: booked in → diagnosed → in repair → ready → collected
-- Record technician notes
-- Filter jobs by status
-- See the full history of every status change, with who made it and when
+| Role | What they can do |
+|------|------------------|
+| **Customer** | Submit support tickets and view responses to them, from an admin or an automated reply |
+| **Admin** | Receive tickets from customers and send responses |
 
-**Customers (no login)**
-- Enter a ticket reference and see the current stage of their repair
+Both roles use an email-style layout: an inbox of tickets, with each ticket opening into its conversation thread.
 
----
+## Features
 
-## Design decisions worth knowing
+- Separate customer and admin accounts
+- Ticket submission from the customer inbox
+- Admin inbox for receiving and responding to tickets
+- Automated responses to customers
+- Passwords hashed before storage
+- Persistent storage of accounts and ticket data
 
-**Status changes are a state machine, enforced on the server.**
-A job cannot jump from *booked in* to *collected*. The allowed moves live in one
-object in `routes/jobs.js`, and the API rejects anything else with a 409. The
-browser only ever shows the buttons the server says are legal.
+## Architecture
 
-**Every status change is appended to `status_history`, never overwritten.**
-The `jobs` table holds current state; `status_history` holds the audit trail.
-"Who marked this ready, and when?" is answerable months later.
-
-**Status changes run inside a transaction with `SELECT ... FOR UPDATE`.**
-Two staff clicking at the same moment would otherwise both read the old status
-and both write a change. The row lock makes the read-check-write sequence atomic.
-
-**Prices are integer pence.**
-`4999`, not `49.99`. Binary floating point cannot represent decimal fractions
-exactly, and the errors accumulate.
-
-**The public endpoint returns almost nothing.**
-`GET /api/track/:ref` returns the reference, device and status. No name, no phone
-number, no price. References are sequential and therefore guessable, so the
-endpoint is also rate limited to 20 lookups per IP per 10 minutes.
-
-**There is no field for a device passcode.**
-Paper tickets in repair shops routinely record them. Storing unlock credentials
-for other people's devices is a liability with no upside, so the schema has
-nowhere to put one. The intake form says so explicitly.
-
-**Passwords are bcrypt hashes at 12 rounds.**
-The plaintext is never stored or logged. Login returns the same error message
-whether the username or the password was wrong, so accounts cannot be enumerated.
-
-**Sessions live in Postgres, not in memory.**
-The default in-memory session store loses everything on restart and leaks memory.
-The cookie is `httpOnly`, `sameSite=lax`, and `secure` in production, and holds
-only a session id — no user data.
-
----
-
-## Running it locally
-
-Requires Node.js 18+ and PostgreSQL 14+.
-
-```bash
-npm install
-createdb repair_tracker
-cp .env.example .env          # then edit it
-psql -d repair_tracker -f schema.sql
-npm run hash                  # creates your first staff account
-npm start
-```
-
-Open <http://localhost:3000>. Staff login is at `/login`.
-
-Optional sample jobs:
-
-```bash
-psql -d repair_tracker -f seed.sql
-```
-
-Generate a session secret with:
-
-```bash
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-```
-
----
-
-## API
-
-| Method | Route                      | Auth   | Purpose                          |
-|--------|----------------------------|--------|----------------------------------|
-| GET    | `/api/track/:ref`          | public | Status of one ticket             |
-| POST   | `/api/login`               | public | Start a session                  |
-| POST   | `/api/logout`              | staff  | End a session                    |
-| GET    | `/api/me`                  | staff  | Is this session still valid?     |
-| GET    | `/api/jobs`                | staff  | List jobs (`?status=` optional)  |
-| GET    | `/api/jobs/:id`            | staff  | One job, its history, next moves |
-| POST   | `/api/jobs`                | staff  | Book in a repair                 |
-| PATCH  | `/api/jobs/:id/status`     | staff  | Move along the pipeline          |
-| PATCH  | `/api/jobs/:id/notes`      | staff  | Save technician notes            |
-
----
-
-## Data protection
-
-The system holds customer names, phone numbers and device details, which are
-personal data under UK GDPR.
-
-- Collect nothing that is not needed to do the repair
-- Never record device passcodes, PINs or patterns
-- Agree a retention period with the shop and delete collected jobs after it
-- Take database backups, and keep them somewhere access-controlled
-
----
+- **Front end:** HTML, CSS and JavaScript
+- **Back end:** _to be decided_
+- **Storage:** a local file for the first release, migrating to cloud storage later
 
 ## Roadmap
 
-1. Per-user roles: owner sees revenue figures, technicians do not
-2. SMS notification when a job reaches *ready* (Twilio)
-3. Parts and IMEI tracking for second-hand stock
-4. Dashboard: average turnaround, most common faults, busiest days
-5. Automated tests, then CI on GitHub Actions
+- [ ] Project plan and page layouts
+- [ ] Login and registration page (`index.html`)
+- [ ] Customer inbox and ticket submission
+- [ ] Admin inbox and responses
+- [ ] Automated responses
+- [ ] Password hashing
+- [ ] File-based storage (first release)
+- [ ] Migration to cloud storage
+
+## Getting started
+
+Setup instructions will be added once the back end is in place.
+
+## Project structure
+
+```
+public/
+  index.html      login / registration
+  css/
+  js/
+```
+
+## Author
+
+Saif Ud-Dean · [github.com/chachusaif](https://github.com/chachusaif)
