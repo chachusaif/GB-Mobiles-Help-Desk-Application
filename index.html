@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character encoding: must come first so the browser reads the file correctly -->
+  <meta charset="UTF-8">
+  <!-- Makes the page scale properly on phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Helpdesk — Log in</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <!-- defer: download now, run after the HTML has been parsed -->
+  <script src="js/auth.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <h1>Helpdesk</h1>
+  </header>
+
+  <main>
+    <section aria-labelledby="login-heading">
+      <h2 id="login-heading">Log in</h2>
+
+      <!-- action/method describe where the form would send data.
+           JS will intercept submission for now (no server yet). -->
+      <form id="login-form" action="/login" method="post">
+
+        <!-- label "for" must match the input "id" -->
+        <label for="login-username">Username</label>
+        <!-- name = the key sent to the server; id = the hook for labels, CSS and JS -->
+        <input
+          type="text"
+          id="login-username"
+          name="username"
+          autocomplete="username"
+          required
+        >
+
+        <label for="login-password">Password</label>
+        <input
+          type="password"
+          id="login-password"
+          name="password"
+          autocomplete="current-password"
+          minlength="8"
+          required
+        >
+
+        <button type="submit">Log in</button>
+      </form>
+
+      <!-- Screen readers announce changes here, e.g. "Incorrect username or password" -->
+      <p id="login-message" aria-live="polite"></p>
+
+      <p>Don't have an account? <a href="register.html">Register</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Helpdesk</p>
+  </footer>
+
+</body>
+</html>
