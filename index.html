@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Character encoding: must come first so the browser reads the file correctly -->
   <meta charset="UTF-8">
-  <!-- Makes the page scale properly on phones -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Helpdesk — Log in</title>
+  <title>Log in</title>
 
   <link rel="stylesheet" href="css/style.css">
-  <!-- defer: download now, run after the HTML has been parsed -->
-  <script src="js/auth.js" defer></script>
+  <script src="js/auth.js" defer></script> <!-- find out if I need this for the register page-->
 </head>
 <body>
 
   <header>
-    <h1>Helpdesk</h1>
+    <h1>HelpDesk</h1>
   </header>
 
   <main>
     <section aria-labelledby="login-heading">
       <h2 id="login-heading">Log in</h2>
 
-      <!-- action/method describe where the form would send data.
-           JS will intercept submission for now (no server yet). -->
-      <form id="login-form" action="/login" method="post">
+      <form id="login-form" action="/login" method="post"> <!-- find out what /login form means and what "action" does-->
 
-        <!-- label "for" must match the input "id" -->
         <label for="login-username">Username</label>
-        <!-- name = the key sent to the server; id = the hook for labels, CSS and JS -->
+
         <input
           type="text"
           id="login-username"
@@ -46,10 +40,9 @@
           required
         >
 
-        <button type="submit">Log in</button>
+        <button type="submit">Log in</button> <!-- button for submission form-->
       </form>
 
-      <!-- Screen readers announce changes here, e.g. "Incorrect username or password" -->
       <p id="login-message" aria-live="polite"></p>
 
       <p>Don't have an account? <a href="register.html">Register</a></p>

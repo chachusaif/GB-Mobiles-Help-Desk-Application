@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <header>
+        <h1>HelpDesk</h1>
+    </header>
+    <main>
+         <section aria-labelledby="login-heading">
+      <h2 id="login-heading">Create Account</h2>
+
+      <form id="login-form" action="/register" method="post"> <!-- find out what /login form means and what "action" does-->
+
+        <label for="register-username">Username</label> <!--changing all the variables from login to register to see if it even matters or if it overlaps during later account verification-->
+
+        <input
+          type="text"
+          id="register-username"
+          name="register_username"
+          autocomplete="register_username"
+          required
+        >
+
+        <label for="register-password">Password</label>
+        <input
+          type="register_password"
+          id="register-password"
+          name="register_password"
+          autocomplete="register-password"
+          minlength="8"
+          required
+        >
+
+        <button type="submit">Create Account</button> <!-- button for submission form-->
+      </form>
+
+      <p id="register-message" aria-live="polite"></p>
+
+      <p>Already have an account? <a href="index.html">Log in</a></p>
+    </section>
+    </main>
+</body>
+</html>
