@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.2.1"
+  },
+  "name": "arman-help-desk-web-app",
+  "version": "1.0.0",
+  "description": "A full-stack helpdesk web application, built from scratch for a client. Customers raise support tickets, and admins receive them and respond, all through an email-style inbox interface.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chachusaif/GB-Mobiles-Help-Desk-Application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chachusaif/GB-Mobiles-Help-Desk-Application/issues"
+  },
+  "homepage": "https://github.com/chachusaif/GB-Mobiles-Help-Desk-Application#readme"
+}
