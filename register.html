@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    
     <link rel="stylesheet" href="css/style.css">
+    <script src="server.js" defer></script> <!-- find out if I need this for the register page-->
 
 </head>
 <body>
@@ -15,9 +17,9 @@
          <section aria-labelledby="login-heading">
       <h2 id="login-heading">Create Account</h2>
 
-      <form id="login-form" action="/register" method="post"> <!-- find out what /login form means and what "action" does-->
+      <form id="register-form" action="/register" method="post"> <!-- find out what /login form means and what "action" does-->
 
-        <label for="register-username">Username</label> <!--changing all the variables from login to register to see if it even matters or if it overlaps during later account verification-->
+        <label for="register-username">Create username</label> <!--changing all the variables from login to register to see if it even matters or if it overlaps during later account verification-->
 
         <input
           type="text"
@@ -27,7 +29,7 @@
           required
         >
 
-        <label for="register-password">Password</label>
+        <label for="register-password">Create password</label> <!--possibly add another password text box for password verification? -->
         <input
           type="register_password"
           id="register-password"
@@ -37,7 +39,12 @@
           required
         >
 
-        <button type="submit">Create Account</button> <!-- button for submission form-->
+        <button type="submit"
+        class="button"
+        value = "Button"
+        onclick=writeToFile()> <!--calls the server to add to the username and password to the file-->
+        Create Account</button> <!-- button for submission form-->
+
       </form>
 
       <p id="register-message" aria-live="polite"></p>
@@ -45,5 +52,10 @@
       <p>Already have an account? <a href="index.html">Log in</a></p>
     </section>
     </main>
+
+    <footer>
+    <p>&copy; 2026 Helpdesk</p>
+  </footer>
+
 </body>
 </html>
