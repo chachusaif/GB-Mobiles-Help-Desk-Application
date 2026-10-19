@@ -6,8 +6,7 @@
     <title>Register</title>
     
     <link rel="stylesheet" href="css/style.css">
-    <script src="server.js" defer></script> <!-- find out if I need this for the register page-->
-
+    <script src="js/register.js" defer></script> <!-- browser code only: server.js runs in Node, never in the page -->
 </head>
 <body>
     <header>
@@ -24,26 +23,25 @@
         <input
           type="text"
           id="register-username"
-          name="register_username"
-          autocomplete="register_username"
+          name="username"
+          autocomplete="username"
+          minlength="3"
+          maxlength="32"
           required
         >
 
         <label for="register-password">Create password</label> <!--possibly add another password text box for password verification? -->
         <input
-          type="register_password"
+          type="password"
           id="register-password"
-          name="register_password"
-          autocomplete="register-password"
+          name="password"
+          autocomplete="new-password"
           minlength="8"
           required
         >
 
-        <button type="submit"
-        class="button"
-        value = "Button"
-        onclick=writeToFile()> <!--calls the server to add to the username and password to the file-->
-        Create Account</button> <!-- button for submission form-->
+        <button type="submit" class="button"> <!-- pressing this fires the form's "submit" event, which js/register.js listens for -->
+        Create Account</button>
 
       </form>
 
